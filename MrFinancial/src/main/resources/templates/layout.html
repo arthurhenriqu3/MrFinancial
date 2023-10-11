@@ -1,3 +1,28 @@
-<div>
-	Ok.
-</div>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>
+		.:: Mr Financial ::.
+	</title>
+</head>
+
+<body>
+	<header>
+		<div>
+			<div th:replace="~{fragments/header :: container}"></div>
+		</div>
+	</header>
+
+	<div class="container">
+		<div th:fragment="container"></div>
+	</div>
+
+	<footer>
+		<div>
+			<div th:replace="~{fragments/footer :: container}"></div>
+		</div>
+	</footer>
+</body>
+
+</html>

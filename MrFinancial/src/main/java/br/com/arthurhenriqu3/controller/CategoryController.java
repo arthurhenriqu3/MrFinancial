@@ -24,7 +24,7 @@ public class CategoryController {
 		List<Category> categories = categoryService.findAll();
 		model.addAllAttributes(categories);
 		
-		return "index";
+		return "layout";
 	}
 
 }
