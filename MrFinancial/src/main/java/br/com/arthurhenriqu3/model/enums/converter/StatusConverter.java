@@ -24,6 +24,6 @@ public class StatusConverter implements AttributeConverter<StatusEnum, Byte> {
 			return null;
 		}
 
-		return StatusEnum.findByCode(code);
+		return StatusEnum.findByCode(Byte.valueOf(code));
 	}
 }

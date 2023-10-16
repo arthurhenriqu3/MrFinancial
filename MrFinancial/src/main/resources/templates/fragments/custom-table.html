@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+</head>
+
+<body>
+	<div th:fragment="custom-table">
+		
+		<div>
+			<a href="#" class="text-black text-decoration-none">Cadastrar Nova Categoria</a>
+		</div>
+		
+		<table class="table table-hover table-striped">
+			<thead>
+				<tr>
+					<th scope="col">NOME</th>
+					<th scope="col">PARENT</th>
+					<th scope="col">AÇÃO</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="category : ${categories}">
+					<th th:text="${category.name}" scope="row"></th>
+					<th th:text="${category.parent == null ? '-' : category.parent.name}" scope="row"></th>
+					<th>
+						<a href="#" class="text-black text-decoration-none">
+							<i class="bi bi-arrow-repeat"></i>
+							<span>Update</span>
+						</a><br />
+						<a href="#" class="text-black text-decoration-none">
+							<i class="bi bi-trash"></i>
+							<span>Remover</span>
+						</a>
+					</th>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+
+</html>

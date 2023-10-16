@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+
+<head>
+	<title>Task List</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<div>
+			<ul>
+				<li>
+					<a th:href="@{/category/new}" class="text-black text-decoration-none">Cadastrar Nova Categoria</a>
+				</li>
+			</ul>
+		</div>
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<td>Nome</td>
+					<td>Categoria</td>
+					<td>Ação</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="category : ${categories}">
+					<th th:text="${category.name}" scope="row"></th>
+					<th th:text="${category.parent == null ? '-' : category.parent.name}" scope="row"></th>
+					<th>
+						<a href="#" class="text-black text-decoration-none">
+							<i class="bi bi-arrow-repeat"></i>
+							<span>Update</span>
+						</a><br />
+						<a href="#" class="text-black text-decoration-none">
+							<i class="bi bi-trash"></i>
+							<span>Remover</span>
+						</a>
+					</th>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+
+</html>

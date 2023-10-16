@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+
+<head>
+	<title>Task List</title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<form action="javascript:void(0);" method="post" th:object="${category}" th:action="@{/category/register}">
+			<input type="text" th:field="*{id}" hidden />
+			<fieldset class="form-group">
+				<div class="row">
+					<legend class="col-form-label col-sm-2 pt-0">Tipo</legend>
+					<div class="col-sm-10">
+						<div class="form-check" th:each="type, index : ${types}">
+							<input class="form-check-input" type="radio" name="type" th:id="${type}+Radio" value="${type}"
+								th:checked="${index.odd}">
+							<label class="form-check-label" th:for="${type}+Radio" th:text="${type}"></label>
+						</div>
+					</div>
+				</div>
+			</fieldset>
+
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label" for="categoryParent">Categoria</label>
+				<div class="col-sm-10">
+					<select th:field="*{parent}" class="custom-select mr-sm-2" id="categoryParent">
+						<option th:value="@{null}" selected>-- Selecione... --</option>
+						<option th:each="c : ${categories}" th:text="${c.name}" th:value="${c.id}"></option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="categoryName" class="col-sm-2 col-form-label">Nome</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" th:field="*{name}" id="categoryName" placeholder="">
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="categoryDescption" class="col-sm-2 col-form-label">Descrição</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" th:field="*{description}" id="categoryDescption" placeholder="">
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="categoryImage" class="col-sm-2 col-form-label">Imagem</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" th:field="*{image}" id="categoryImage" placeholder="">
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label" for="">Status</label>
+				<div class="col-sm-10">
+					<select th:field="*{status}" id="categoryStatus" class="custom-select mr-sm-2">
+						<option th:value="@{null}" selected>-- Selecione... --</option>
+						<option th:each="st : ${status}" th:value="${st}" th:text="${st.getValue}"></option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-sm-10">
+					<button type="submit" class="btn btn-primary">Registrar</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+
+</html>

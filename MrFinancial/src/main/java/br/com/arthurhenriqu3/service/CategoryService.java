@@ -14,6 +14,10 @@ public class CategoryService {
 	@Autowired
 	private CategoryRepository categoryRepository;
 	
+	public Category register(Category category) {
+		return categoryRepository.save(category);
+	}
+	
 	public List<Category> findAll(){
 		return categoryRepository.findAll();
 	}
