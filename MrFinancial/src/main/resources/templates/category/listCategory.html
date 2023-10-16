@@ -2,7 +2,7 @@
 <html layout:decorate="~{layout}">
 
 <head>
-	<title>Task List</title>
+	<title></title>
 </head>
 
 <body>
@@ -19,6 +19,7 @@
 				<tr>
 					<td>Nome</td>
 					<td>Categoria</td>
+					<td>Status</td>
 					<td>Ação</td>
 				</tr>
 			</thead>
@@ -26,14 +27,17 @@
 				<tr th:each="category : ${categories}">
 					<th th:text="${category.name}" scope="row"></th>
 					<th th:text="${category.parent == null ? '-' : category.parent.name}" scope="row"></th>
+					<th scope="row">
+						<i th:class="bi + ' ' + bi-eye + ${category.status.getCode == 0 ? '-slash-fill':''}"></i>
+					</th>
 					<th>
 						<a href="#" class="text-black text-decoration-none">
 							<i class="bi bi-arrow-repeat"></i>
-							<span>Update</span>
+							<a th:href="@{/category/}+${category.id}">Update</a>
 						</a><br />
 						<a href="#" class="text-black text-decoration-none">
 							<i class="bi bi-trash"></i>
-							<span>Remover</span>
+							<a th:data-id="${category.id}" th:onclick="requestToRemove(this.getAttribute('data-id'))">Remover</a>
 						</a>
 					</th>
 				</tr>

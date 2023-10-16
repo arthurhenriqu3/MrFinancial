@@ -7,9 +7,6 @@
 	<link rel="stylesheet" th:href="@{/bootstrap-5.3.2-dist/css/bootstrap.min.css}" />
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-	<script th:src="@{/jquery-3.7.1/code.jquery.com_jquery-3.7.1.min.js}"></script>
-	<script th:src="@{/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js}"></script>
-
 	<title th:text="'.:: Mr. Financial ::.'"></title>
 </head>
 
@@ -25,7 +22,10 @@
 	</main>
 
 	<footer th:replace="~{fragments/footer :: container}"></footer>
-
+	
+	<script type="text/javascript" th:src="@{/jquery-3.7.1/code.jquery.com_jquery-3.7.1.min.js}"></script>
+	<script type="text/javascript" th:src="@{/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js}"></script>
+	<script type="text/javascript" th:src="@{/javascript/js.js}"></script>
 
 </body>
 
