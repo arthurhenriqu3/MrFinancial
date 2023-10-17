@@ -22,6 +22,10 @@ public class CategoryService {
 	public Category findById(String id) {
 		return categoryRepository.findById(UUID.fromString(id)).get();
 	}
+
+	public void deleteById(String id) {
+		categoryRepository.deleteById(UUID.fromString(id));
+	}
 	
 	public List<Category> findAll(){
 		return categoryRepository.findAll();

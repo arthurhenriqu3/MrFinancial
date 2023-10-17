@@ -2,6 +2,6 @@
  * 
  */
 
- function requestToRemove(data){
-	 alert("ID: " + data);
- }
+function requestToRemove(data) {
+
+}

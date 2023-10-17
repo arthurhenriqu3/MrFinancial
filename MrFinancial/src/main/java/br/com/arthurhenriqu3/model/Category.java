@@ -25,10 +25,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "tb_category")
+@Table(name = "tb_category", uniqueConstraints = {
+		@UniqueConstraint(columnNames = { "name", "category_id" }, name = "category_name_by_parent_unique") })
 public class Category implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -44,7 +46,7 @@ public class Category implements Serializable {
 
 	@NotNull
 	@Length(max = 50)
-	@Column(nullable = false, unique = true, length = 50)
+	@Column(nullable = false, length = 50)
 	private String name;
 
 	@Column
@@ -67,14 +69,13 @@ public class Category implements Serializable {
 		this.children = new ArrayList<Category>();
 	}
 
-	public Category(String name, String description, String image, Category parent, List<Category> children, StatusEnum status) {
+	public Category(Category parent, String name, String description, String image, List<Category> children) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.image = image;
 		this.parent = parent;
 		this.children = children;
-		this.status = status;
 	}
 
 	public UUID getId() {

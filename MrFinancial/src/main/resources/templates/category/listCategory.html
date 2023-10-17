@@ -36,8 +36,11 @@
 							<a th:href="@{/category/}+${category.id}">Update</a>
 						</a><br />
 						<a href="#" class="text-black text-decoration-none">
-							<i class="bi bi-trash"></i>
-							<a th:data-id="${category.id}" th:onclick="requestToRemove(this.getAttribute('data-id'))">Remover</a>
+							
+									<form method="post" th:object="${category}" th:action="@{/category/delete}">
+										<input type="hidden" name="id" th:value="${category.id}">
+										<i class="bi bi-trash"></i><button type="submit">Delete</button>
+									</form>
 						</a>
 					</th>
 				</tr>

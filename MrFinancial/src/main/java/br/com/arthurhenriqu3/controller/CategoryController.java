@@ -59,4 +59,10 @@ public class CategoryController {
 		categoryService.register(category);
 		return "redirect:/category";
 	}
+
+	@PostMapping("/delete")
+	public String doRegisterData(String id, Model model) {
+		categoryService.deleteById(id);
+		return "redirect:/category";
+	}
 }
