@@ -1,9 +1,9 @@
 package br.com.arthurhenriqu3.controller;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,10 +27,8 @@ public class CategoryController {
 
 	@GetMapping
 	public String getAllCategoryPage(final Model model) {
-
-		List<Category> categories = categoryService.findAll();
-		model.addAttribute("categories", categories);
-
+		model.addAttribute("categories", categoryService
+				.findAll(Sort.by(Sort.Direction.ASC, "parent.name").and(Sort.by(Sort.Direction.ASC, "name"))));
 		return "category/listCategory";
 	}
 
@@ -38,22 +36,22 @@ public class CategoryController {
 	public String getFormCategoryPage(final Model model) {
 		model.addAttribute("types", Arrays.asList(BookEntryTypeEnum.values()));
 		model.addAttribute("status", Arrays.asList(StatusEnum.values()));
-		model.addAttribute("categories", categoryService.findAll());
+		model.addAttribute("categories", categoryService.findAll(Sort.by(Sort.Direction.ASC, "name")));
 		model.addAttribute("category", new Category());
-		
+
 		return "category/formCategory";
 	}
-	
+
 	@GetMapping("/{id}")
-	public String getFormCategoryPage(@PathVariable String id, final Model model){
+	public String getFormCategoryPage(@PathVariable String id, final Model model) {
 		model.addAttribute("types", Arrays.asList(BookEntryTypeEnum.values()));
 		model.addAttribute("status", Arrays.asList(StatusEnum.values()));
-		model.addAttribute("categories", categoryService.findAll());
+		model.addAttribute("categories", categoryService.findAll(Sort.by(Sort.Direction.ASC, "name")));
 		model.addAttribute("category", categoryService.findById(id));
-		
+
 		return "category/formCategory";
 	}
-	
+
 	@PostMapping("/register")
 	public String doRegisterData(@Valid @ModelAttribute Category category, Model model) {
 		categoryService.register(category);
@@ -63,6 +61,16 @@ public class CategoryController {
 	@PostMapping("/delete")
 	public String doRegisterData(String id, Model model) {
 		categoryService.deleteById(id);
+		return "redirect:/category";
+	}
+
+	@PostMapping("/visible")
+	public String doUpdateVisible(String id, String status) {
+
+		Category c = categoryService.findById(id);
+		c.setStatus(status.equals(StatusEnum.ACTIVE.getValue()) ? StatusEnum.INACTIVE : StatusEnum.ACTIVE);
+
+		categoryService.register(c);
 		return "redirect:/category";
 	}
 }

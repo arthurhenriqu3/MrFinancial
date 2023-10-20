@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 public enum BookEntryTypeEnum {
 
-	EXPENSE("Despesa", (byte) 0), REVENUE("Receita", (byte) 1);
+	EXPENSE("Despesas", (byte) 0), REVENUE("Receitas", (byte) 1);
 
 	private String value;
 	private Byte code;

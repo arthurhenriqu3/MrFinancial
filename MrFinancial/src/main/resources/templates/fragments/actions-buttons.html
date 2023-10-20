@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+	<div th:fragment="main (text, uri)">
+		<div class="group-btn-action" align="left">
+			<a th:href="${uri}" class="btn btn-bd-action">
+				<i class="bi bi-plus-lg"></i>
+				<span th:text="${text}"></span>
+			</a>
+		</div>
+	</div>
+</body>
+
+</html>
