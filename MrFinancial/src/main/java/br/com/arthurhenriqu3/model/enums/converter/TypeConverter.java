@@ -2,15 +2,15 @@ package br.com.arthurhenriqu3.model.enums.converter;
 
 import java.util.Objects;
 
-import br.com.arthurhenriqu3.model.enums.BookEntryTypeEnum;
+import br.com.arthurhenriqu3.model.enums.TypeEnum;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
 @Converter(autoApply = true)
-public class BookEntryTypeConverter implements AttributeConverter<BookEntryTypeEnum, Byte> {
+public class TypeConverter implements AttributeConverter<TypeEnum, Byte> {
 
 	@Override
-	public Byte convertToDatabaseColumn(BookEntryTypeEnum bookEntryTypeEnum) {
+	public Byte convertToDatabaseColumn(TypeEnum bookEntryTypeEnum) {
 		if (Objects.isNull(bookEntryTypeEnum)) {
 			return null;
 		}
@@ -19,11 +19,11 @@ public class BookEntryTypeConverter implements AttributeConverter<BookEntryTypeE
 	}
 
 	@Override
-	public BookEntryTypeEnum convertToEntityAttribute(Byte code) {
+	public TypeEnum convertToEntityAttribute(Byte code) {
 		if (Objects.isNull(code)) {
 			return null;
 		}
 
-		return BookEntryTypeEnum.findByCode(code);
+		return TypeEnum.findByCode(code);
 	}
 }

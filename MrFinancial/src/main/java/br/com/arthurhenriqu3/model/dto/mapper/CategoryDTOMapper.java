@@ -11,11 +11,11 @@ public class CategoryDTOMapper implements DTOMapper<Category, CategoryDTO> {
 	@Override
 	public CategoryDTO toDTO(Category category) {
 		return new CategoryDTO(category.getParent(), category.getName(), category.getDescription(), category.getImage(),
-				category.getChildren());
+				category.getStatus(), category.getType(), category.getChildren());
 	}
 
 	@Override
 	public Category toEntity(CategoryDTO d) {
-		return new Category(d.parent(), d.name(), d.description(), d.image(), d.children());
+		return new Category(d.parent(), d.name(), d.description(), d.image(), d.status(), d.type(), d.children());
 	}
 }

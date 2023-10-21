@@ -12,7 +12,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import br.com.arthurhenriqu3.model.enums.StatusEnum;
+import br.com.arthurhenriqu3.model.enums.TypeEnum;
 import br.com.arthurhenriqu3.model.enums.converter.StatusConverter;
+import br.com.arthurhenriqu3.model.enums.converter.TypeConverter;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -26,11 +28,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "tb_category", uniqueConstraints = {
-		@UniqueConstraint(columnNames = { "name", "category_id" }, name = "category_name_by_parent_unique") })
+@Table(name = "tb_category", uniqueConstraints = { @UniqueConstraint(columnNames = { "name", "category_id",
+		"type" }, name = "category_name_and_parent_and_type_unique") })
 public class Category implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -44,6 +48,8 @@ public class Category implements Serializable {
 	@JoinColumn(name = "category_id", nullable = true)
 	private Category parent;
 
+	@NotBlank
+	@NotEmpty
 	@NotNull
 	@Length(max = 50)
 	@Column(nullable = false, length = 50)
@@ -57,6 +63,11 @@ public class Category implements Serializable {
 
 	@NotNull
 	@Column(nullable = false)
+	@Convert(converter = TypeConverter.class)
+	private TypeEnum type;
+
+	@NotNull
+	@Column(nullable = false)
 	@Convert(converter = StatusConverter.class)
 	private StatusEnum status;
 
@@ -65,16 +76,20 @@ public class Category implements Serializable {
 	private List<Category> children;
 
 	public Category() {
+		this.type = TypeEnum.EXPENSE;
 		this.status = StatusEnum.INACTIVE;
 		this.children = new ArrayList<Category>();
 	}
 
-	public Category(Category parent, String name, String description, String image, List<Category> children) {
+	public Category(Category parent, String name, String description, String image, StatusEnum status, TypeEnum type,
+			List<Category> children) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.image = image;
 		this.parent = parent;
+		this.status = status;
+		this.type = type;
 		this.children = children;
 	}
 
@@ -124,6 +139,14 @@ public class Category implements Serializable {
 
 	public void setChildren(List<Category> children) {
 		this.children = children;
+	}
+
+	public TypeEnum getType() {
+		return type;
+	}
+
+	public void setType(TypeEnum type) {
+		this.type = type;
 	}
 
 	public StatusEnum getStatus() {

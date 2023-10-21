@@ -9,7 +9,7 @@ import br.com.arthurhenriqu3.model.enums.StatusEnum;
 public class StatusConverter implements Converter<String, StatusEnum>{
 
 	@Override
-	public StatusEnum convert(final String source) {
+	public StatusEnum convert(String source) {
 		return StatusEnum.findByValue(source);
 	}
 }

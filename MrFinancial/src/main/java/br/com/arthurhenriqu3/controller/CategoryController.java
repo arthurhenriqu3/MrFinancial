@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,8 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.arthurhenriqu3.model.Category;
-import br.com.arthurhenriqu3.model.enums.BookEntryTypeEnum;
 import br.com.arthurhenriqu3.model.enums.StatusEnum;
+import br.com.arthurhenriqu3.model.enums.TypeEnum;
 import br.com.arthurhenriqu3.service.CategoryService;
 import jakarta.validation.Valid;
 
@@ -34,26 +35,25 @@ public class CategoryController {
 
 	@GetMapping("/new")
 	public String getFormCategoryPage(final Model model) {
-		model.addAttribute("types", Arrays.asList(BookEntryTypeEnum.values()));
-		model.addAttribute("status", Arrays.asList(StatusEnum.values()));
-		model.addAttribute("categories", categoryService.findAll(Sort.by(Sort.Direction.ASC, "name")));
-		model.addAttribute("category", new Category());
-
-		return "category/formCategory";
+		return getFormCategoryPage(model, new Category());
 	}
 
 	@GetMapping("/{id}")
 	public String getFormCategoryPage(@PathVariable String id, final Model model) {
-		model.addAttribute("types", Arrays.asList(BookEntryTypeEnum.values()));
-		model.addAttribute("status", Arrays.asList(StatusEnum.values()));
-		model.addAttribute("categories", categoryService.findAll(Sort.by(Sort.Direction.ASC, "name")));
-		model.addAttribute("category", categoryService.findById(id));
-
-		return "category/formCategory";
+		return getFormCategoryPage(model, categoryService.findById(id));
 	}
 
 	@PostMapping("/register")
-	public String doRegisterData(@Valid @ModelAttribute Category category, Model model) {
+	public String doRegisterData(@ModelAttribute @Valid Category category, BindingResult bindingResult,
+			final Model model) {
+
+		System.out.println("### BindingResult ###");
+		bindingResult.getAllErrors().forEach(System.out::println);
+
+		if (bindingResult.hasErrors()) {
+			return getFormCategoryPage(model, category);
+		}
+
 		categoryService.register(category);
 		return "redirect:/category";
 	}
@@ -72,5 +72,14 @@ public class CategoryController {
 
 		categoryService.register(c);
 		return "redirect:/category";
+	}
+
+	private String getFormCategoryPage(Model model, Category category) {
+		model.addAttribute("types", Arrays.asList(TypeEnum.values()));
+		model.addAttribute("status", Arrays.asList(StatusEnum.values()));
+		model.addAttribute("categories", categoryService.findAll(Sort.by(Sort.Direction.ASC, "name")));
+		model.addAttribute("category", category);
+
+		return "category/formCategory";
 	}
 }
