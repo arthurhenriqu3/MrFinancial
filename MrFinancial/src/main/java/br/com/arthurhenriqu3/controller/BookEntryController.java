@@ -7,13 +7,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.arthurhenriqu3.model.BookEntry;
 import br.com.arthurhenriqu3.model.Category;
-import br.com.arthurhenriqu3.model.enums.TypeEnum;
 import br.com.arthurhenriqu3.model.enums.StatusEnum;
+import br.com.arthurhenriqu3.model.enums.TypeEnum;
 import br.com.arthurhenriqu3.service.CategoryService;
 
 @Controller

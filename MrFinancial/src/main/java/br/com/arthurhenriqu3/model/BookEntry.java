@@ -12,9 +12,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
-import br.com.arthurhenriqu3.model.enums.TypeEnum;
 import br.com.arthurhenriqu3.model.enums.StatusEnum;
-import br.com.arthurhenriqu3.model.enums.converter.TypeConverter;
 import br.com.arthurhenriqu3.model.enums.converter.StatusConverter;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -25,6 +23,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
@@ -49,6 +49,8 @@ public class BookEntry implements Serializable {
 	@JoinColumn(name = "wallet_id", nullable = false)
 	private Wallet wallet;
 
+	@NotBlank
+	@NotEmpty
 	@NotNull
 	@Length(max = 100)
 	@Column(nullable = false)
@@ -64,19 +66,24 @@ public class BookEntry implements Serializable {
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate date;
 
-	@NotNull
-	@Column(nullable = false)
-	@Convert(converter = TypeConverter.class)
-	private TypeEnum bookEntryType;
-
 	@Column(nullable = false)
 	@Convert(converter = StatusConverter.class)
 	private StatusEnum status;
 
 	public BookEntry() {
 		this.value = new BigDecimal(0);
-		this.bookEntryType = TypeEnum.EXPENSE;
-		this.status = StatusEnum.INACTIVE;
+		this.status = StatusEnum.INATIVO;
+	}
+	
+	public BookEntry(@NotNull Category category, @NotNull Wallet wallet, @NotNull @Length(max = 100) String name,
+			@NotNull @Positive BigDecimal value, @NotNull LocalDate date, StatusEnum status) {
+		super();
+		this.category = category;
+		this.wallet = wallet;
+		this.name = name;
+		this.value = value;
+		this.date = date;
+		this.status = status;
 	}
 
 	public UUID getId() {
@@ -117,14 +124,6 @@ public class BookEntry implements Serializable {
 
 	public void setCategory(Category category) {
 		this.category = category;
-	}
-
-	public TypeEnum getBookEntryType() {
-		return bookEntryType;
-	}
-
-	public void setBookEntryType(TypeEnum bookEntryType) {
-		this.bookEntryType = bookEntryType;
 	}
 
 	public StatusEnum getStatus() {
