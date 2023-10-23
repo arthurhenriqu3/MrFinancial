@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+
+<head>
+	<title></title>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<div th:replace="~{/fragments/actions-buttons :: main(${'Carteira'}, ${'/carteira/new'})}"></div>
+
+		<div class="table-responsive">
+			<table class="table table-striped table-borderless table align-middle">
+				<thead class="table-dark">
+					<tr>
+						<td scope="col">NOME</td>
+						<td scope="col">STATUS</td>
+						<td scope="col">AÇÃO</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="w : ${wallets}">
+						<th th:text="${w.name}" scope="row"></th>
+						<th scope="row">
+							<form method="post" th:object="${w}" th:action="@{/carteira/visible}">
+								<input type="hidden" name="id" th:value="${w.id}">
+								<input type="hidden" name="status" th:value="${w.status}">
+								<i
+									th:class="bi + ' ' + bi-eye + ${w.status.getCode == 0 ? '-slash-fill':''}"></i>
+								<button type="submit">update</button>
+							</form>
+						</th>
+						<th>
+							<a href="#" class="text-black text-decoration-none">
+								<i class="bi bi-arrow-repeat"></i>
+								<a th:href="@{/carteira/}+${w.id}">Update</a>
+							</a><br />
+							<a href="#" class="text-black text-decoration-none">
+
+								<form method="post" th:object="${w}" th:action="@{/carteira/delete}">
+									<input type="hidden" name="id" th:value="${w.id}">
+									<i class="bi bi-trash"></i><button type="submit">Delete</button>
+								</form>
+							</a>
+						</th>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div th:replace="~{/fragments/actions-buttons :: main(${'Carteira'}, ${'/carteira/new'})}"></div>
+	</div>
+</body>
+
+</html>

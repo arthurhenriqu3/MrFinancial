@@ -23,6 +23,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -35,6 +37,8 @@ public class Wallet implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 
+	@NotBlank
+	@NotEmpty
 	@Length(max = 100)
 	@NotNull
 	@Column(nullable = false)
@@ -51,7 +55,14 @@ public class Wallet implements Serializable {
 
 	public Wallet() {
 		this.bookEntries = new ArrayList<BookEntry>();
-		this.status = StatusEnum.INACTIVE;
+		this.status = StatusEnum.INATIVO;
+	}
+
+	public Wallet(@Length(max = 100) @NotNull String name, @NotNull StatusEnum status, List<BookEntry> bookEntries) {
+		super();
+		this.name = name;
+		this.status = status;
+		this.bookEntries = bookEntries;
 	}
 
 	public UUID getId() {
