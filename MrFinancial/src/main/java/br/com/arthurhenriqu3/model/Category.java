@@ -74,10 +74,10 @@ public class Category implements Serializable {
 	@JsonProperty(access = Access.WRITE_ONLY)
 	@OneToMany(mappedBy = "parent", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Category> children;
-
+	
 	public Category() {
-		this.type = TypeEnum.EXPENSE;
-		this.status = StatusEnum.INACTIVE;
+		this.type = TypeEnum.DESPESA;
+		this.status = StatusEnum.INATIVO;
 		this.children = new ArrayList<Category>();
 	}
 

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import br.com.arthurhenriqu3.model.Category;
+import br.com.arthurhenriqu3.model.enums.TypeEnum;
 import br.com.arthurhenriqu3.repository.CategoryRepository;
 
 @Service
@@ -34,5 +35,13 @@ public class CategoryService {
 
 	public List<Category> findAll(Sort sort) {
 		return categoryRepository.findAll(sort);
+	}
+	
+	public List<Category> findAllByType(String type) {
+		return categoryRepository.findByType(TypeEnum.findByCode(Byte.parseByte(type)));
+	}
+	
+	public List<Category> findAllByType(String type, Sort sort) {
+		return categoryRepository.findByType(TypeEnum.findByCode(Byte.parseByte(type)), sort);
 	}
 }

@@ -7,10 +7,10 @@
 			<input type="text" th:field="*{id}" hidden />
 			<fieldset class="form-group">
 				<div class="row">
-					<legend class="col-form-label col-sm-2 pt-0">Tipo</legend>
+					<legend class="col-form-label col-sm-2 pt-0" align="right">Tipo:</legend>
 					<div class="col-sm-10">
-						<div class="form-check" th:each="type, index : ${types}">
-							<input th:field="*{type}" class="form-check-input" type="radio"
+						<div class="form-check form-check-inline" th:each="type, index : ${types}">
+							<input onchange="loadCategories(this.id.replace(this.value, ''))" th:field="*{type}" class="form-check-input" type="radio"
 								th:id="${type.value + type.code}" th:value="${type}">
 							<label class="form-check-label cursor-pointer" th:for="${type.value + type.code}"
 								th:text="${type.value}"></label>
@@ -20,17 +20,17 @@
 			</fieldset>
 
 			<div class="form-group row mt-3">
-				<label class="col-sm-2 col-form-label" for="categoryParent">Categoria Raiz</label>
+				<label class="col-sm-2 col-form-label" for="categoryParent" align="right">Categoria Superior:</label>
 				<div class="col-sm-10">
-					<select th:field="*{parent}" class="custom-select mr-sm-2" id="categoryParent">
-						<option th:value="@{null}" selected>-- Raiz --</option>
+					<select th:field="*{parent}" class="form-select mr-sm-2" id="categoryParent">
+						<option th:value="@{null}" selected>----- Selecione -----</option>
 						<option th:each="c : ${categories}" th:text="${c.name}" th:value="${c.id}"></option>
 					</select>
 				</div>
 			</div>
 
 			<div class="form-group row mt-3">
-				<label for="categoryName" class="col-sm-2 col-form-label">Nome</label>
+				<label for="categoryName" class="col-sm-2 col-form-label" align="right">Nome:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" th:field="*{name}" id="categoryName" placeholder="">
 					<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
@@ -38,7 +38,7 @@
 			</div>
 
 			<div class="form-group row mt-3">
-				<label for="categoryDescption" class="col-sm-2 col-form-label">Descrição</label>
+				<label for="categoryDescption" class="col-sm-2 col-form-label" align="right">Descrição:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" th:field="*{description}" id="categoryDescption"
 						placeholder="">
@@ -46,25 +46,26 @@
 			</div>
 
 			<div class="form-group row mt-3 d-none">
-				<label for="categoryImage" class="col-sm-2 col-form-label">Imagem</label>
+				<label for="categoryImage" class="col-sm-2 col-form-label" align="right">Imagem:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" th:field="*{image}" id="categoryImage" placeholder="">
 				</div>
 			</div>
 
 			<div class="form-group row mt-3">
-				<label class="col-sm-2 col-form-label" for="">Status</label>
+				<label class="col-sm-2 col-form-label" for="categoryStatus" align="right">Status:</label>
 				<div class="col-sm-10">
-					<select th:field="*{status}" id="categoryStatus" class="custom-select mr-sm-2">
-						<option th:value="@{null}" selected>-- Selecione... --</option>
+					<select th:field="*{status}" id="categoryStatus" class="form-select mr-sm-2">
+						<option th:value="@{null}" selected>----- Selecione -----</option>
 						<option th:each="st : ${status}" th:value="${st}" th:text="${st.getValue}"></option>
 					</select>
 				</div>
 			</div>
 
-			<div class="form-group row mt-3">
-				<div class="col-sm-10">
-					<button type="submit" class="btn btn-primary">Registrar</button>
+			<div class="form-group row mt-3" align="center">
+				<div class="col-sm">
+					<button type="submit" class="btn btn-primary w-25">Registrar</button>
+					<button onclick="alert('Cancelar')" type="button" class="btn btn-secondary">Cancelar</button>
 				</div>
 			</div>
 		</form>

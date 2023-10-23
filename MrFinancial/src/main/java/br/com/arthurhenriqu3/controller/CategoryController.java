@@ -1,9 +1,12 @@
 package br.com.arthurhenriqu3.controller;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,12 +38,12 @@ public class CategoryController {
 
 	@GetMapping("/new")
 	public String getFormCategoryPage(final Model model) {
-		return getFormCategoryPage(model, new Category());
+		return getFormCategoryPage(model, TypeEnum.DESPESA, new Category());
 	}
 
 	@GetMapping("/{id}")
 	public String getFormCategoryPage(@PathVariable String id, final Model model) {
-		return getFormCategoryPage(model, categoryService.findById(id));
+		return getFormCategoryPage(model, null, categoryService.findById(id));
 	}
 
 	@PostMapping("/register")
@@ -51,7 +54,7 @@ public class CategoryController {
 		bindingResult.getAllErrors().forEach(System.out::println);
 
 		if (bindingResult.hasErrors()) {
-			return getFormCategoryPage(model, category);
+			return getFormCategoryPage(model, null, category);
 		}
 
 		categoryService.register(category);
@@ -68,18 +71,28 @@ public class CategoryController {
 	public String doUpdateVisible(String id, String status) {
 
 		Category c = categoryService.findById(id);
-		c.setStatus(status.equals(StatusEnum.ACTIVE.getValue()) ? StatusEnum.INACTIVE : StatusEnum.ACTIVE);
+		c.setStatus(status.equals(StatusEnum.ATIVO.getValue()) ? StatusEnum.INATIVO : StatusEnum.ATIVO);
 
 		categoryService.register(c);
 		return "redirect:/category";
 	}
 
-	private String getFormCategoryPage(Model model, Category category) {
+	@PostMapping("/api/findAllBy{type}")
+	public ResponseEntity<List<Category>> findAll(@PathVariable String type) {
+		return new ResponseEntity<List<Category>>(categoryService.findAllByType(type), HttpStatus.OK);
+	}
+
+	private String getFormCategoryPage(Model model, TypeEnum type, Category category) {
 		model.addAttribute("types", Arrays.asList(TypeEnum.values()));
 		model.addAttribute("status", Arrays.asList(StatusEnum.values()));
-		model.addAttribute("categories", categoryService.findAll(Sort.by(Sort.Direction.ASC, "name")));
 		model.addAttribute("category", category);
 
+		if(type == null) {
+			model.addAttribute("categories", categoryService.findAllByType(category.getType().getCode().toString(), Sort.by(Sort.Direction.ASC, "name")));			
+		}else {
+			model.addAttribute("categories", categoryService.findAllByType(type.getCode().toString(), Sort.by(Sort.Direction.ASC, "name")));			
+		}
+		
 		return "category/formCategory";
 	}
 }
