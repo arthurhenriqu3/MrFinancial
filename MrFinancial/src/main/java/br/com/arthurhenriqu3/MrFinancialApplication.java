@@ -68,25 +68,25 @@ public class MrFinancialApplication implements CommandLineRunner {
 		 * LocalDate date, StatusEnum status) {
 		 * 
 		 */
-		BookEntry beAluguel1 = new BookEntry(dCustoFixo, wPrincipal, "Aluguel 01/12", new BigDecimal(2800),
+		BookEntry beAluguel1 = new BookEntry(dCustoFixo, wPrincipal, "Aluguel 01/12", null, new BigDecimal(2800),
 				LocalDate.of(2023, 9, 3), StatusEnum.ATIVO);
 
-		BookEntry beCondominio1 = new BookEntry(dCustoFixo, wPrincipal, "Condominio 01/12", new BigDecimal(2800),
+		BookEntry beCondominio1 = new BookEntry(dCustoFixo, wPrincipal, "Condominio 01/12", null, new BigDecimal(2800),
 				LocalDate.of(2023, 9, 3), StatusEnum.ATIVO);
 
-		BookEntry beAluguel2 = new BookEntry(dCustoFixo, wPrincipal, "Aluguel 02/12", new BigDecimal(2800),
+		BookEntry beAluguel2 = new BookEntry(dCustoFixo, wPrincipal, "Aluguel 02/12", null, new BigDecimal(2800),
 				LocalDate.of(2023, 10, 3), StatusEnum.ATIVO);
 
-		BookEntry beCondominio2 = new BookEntry(dCustoFixo, wPrincipal, "Condominio 02/12", new BigDecimal(2800),
+		BookEntry beCondominio2 = new BookEntry(dCustoFixo, wPrincipal, "Condominio 02/12", null, new BigDecimal(2800),
 				LocalDate.of(2023, 9, 3), StatusEnum.ATIVO);
 
-		BookEntry beEsporte = new BookEntry(dPrazeres, wPrincipal, "Provas", new BigDecimal(1500),
+		BookEntry beEsporte = new BookEntry(dPrazeres, wPrincipal, "Provas", null, new BigDecimal(1500),
 				LocalDate.of(2023, 10, 9), StatusEnum.ATIVO);
 
-		BookEntry beSalario1 = new BookEntry(rSalario, wPrincipal, "Salario", new BigDecimal(5000),
+		BookEntry beSalario1 = new BookEntry(rSalario, wPrincipal, "Salario", null, new BigDecimal(5000),
 				LocalDate.of(2023, 9, 2), StatusEnum.ATIVO);
 
-		BookEntry beSalario2 = new BookEntry(rSalario, wPrincipal, "Salario", new BigDecimal(5000),
+		BookEntry beSalario2 = new BookEntry(rSalario, wPrincipal, "Salario", null, new BigDecimal(5000),
 				LocalDate.of(2023, 10, 2), StatusEnum.ATIVO);
 
 		bookEntryRepository.saveAll(

@@ -77,7 +77,7 @@ public class CategoryController {
 		return "redirect:/category";
 	}
 
-	@PostMapping("/api/findAllBy{type}")
+	@PostMapping("/findAllBy/{type}")
 	public ResponseEntity<List<Category>> findAll(@PathVariable String type) {
 		return new ResponseEntity<List<Category>>(categoryService.findAllByType(type), HttpStatus.OK);
 	}

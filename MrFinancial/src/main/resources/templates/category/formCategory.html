@@ -10,7 +10,7 @@
 					<legend class="col-form-label col-sm-2 pt-0" align="right">Tipo:</legend>
 					<div class="col-sm-10">
 						<div class="form-check form-check-inline" th:each="type, index : ${types}">
-							<input onchange="loadCategories(this.id.replace(this.value, ''))" th:field="*{type}" class="form-check-input" type="radio"
+							<input data-uri="/category/findAllBy" onchange="loadCategories(this)" th:field="*{type}" class="form-check-input" type="radio"
 								th:id="${type.value + type.code}" th:value="${type}">
 							<label class="form-check-label cursor-pointer" th:for="${type.value + type.code}"
 								th:text="${type.value}"></label>
@@ -22,7 +22,7 @@
 			<div class="form-group row mt-3">
 				<label class="col-sm-2 col-form-label" for="categoryParent" align="right">Categoria Superior:</label>
 				<div class="col-sm-10">
-					<select th:field="*{parent}" class="form-select mr-sm-2" id="categoryParent">
+					<select th:field="*{parent}" class="form-select mr-sm-2 loadCategories" id="categoryParent">
 						<option th:value="@{null}" selected>----- Selecione -----</option>
 						<option th:each="c : ${categories}" th:text="${c.name}" th:value="${c.id}"></option>
 					</select>

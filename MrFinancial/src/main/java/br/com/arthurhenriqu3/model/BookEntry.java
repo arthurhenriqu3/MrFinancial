@@ -56,6 +56,9 @@ public class BookEntry implements Serializable {
 	@Column(nullable = false)
 	private String name;
 
+	@Column
+	private String description;
+
 	@NotNull
 	@Positive
 	@Column(nullable = false)
@@ -74,13 +77,14 @@ public class BookEntry implements Serializable {
 		this.value = new BigDecimal(0);
 		this.status = StatusEnum.INATIVO;
 	}
-	
+
 	public BookEntry(@NotNull Category category, @NotNull Wallet wallet, @NotNull @Length(max = 100) String name,
-			@NotNull @Positive BigDecimal value, @NotNull LocalDate date, StatusEnum status) {
+			String description, @NotNull @Positive BigDecimal value, @NotNull LocalDate date, StatusEnum status) {
 		super();
 		this.category = category;
 		this.wallet = wallet;
 		this.name = name;
+		this.description = description;
 		this.value = value;
 		this.date = date;
 		this.status = status;
@@ -100,6 +104,14 @@ public class BookEntry implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public BigDecimal getValue() {
