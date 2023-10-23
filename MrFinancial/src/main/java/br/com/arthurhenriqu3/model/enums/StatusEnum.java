@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 public enum StatusEnum {
 
-	INACTIVE("Inactive", (byte) 0), ACTIVE("Active", (byte) 1);
+	INATIVO("INATIVO", (byte) 0), ATIVO("ATIVO", (byte) 1);
 
 	private String value;
 	private Byte code;

@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 public enum TypeEnum {
 
-	EXPENSE("Despesas", (byte) 0), REVENUE("Receitas", (byte) 1);
+	DESPESA("Despesas", (byte) 0), RECEITA("Receitas", (byte) 1);
 
 	private String value;
 	private Byte code;
