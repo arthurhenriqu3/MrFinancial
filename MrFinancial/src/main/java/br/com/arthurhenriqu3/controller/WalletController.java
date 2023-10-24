@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.arthurhenriqu3.model.Wallet;
 import br.com.arthurhenriqu3.model.enums.StatusEnum;
-import br.com.arthurhenriqu3.service.WalletService;
+import br.com.arthurhenriqu3.service.impl.WalletServiceImpl;
 import jakarta.validation.Valid;
 
 @Controller
@@ -23,17 +23,17 @@ import jakarta.validation.Valid;
 public class WalletController {
 
 	@Autowired
-	private WalletService walletService;
-	
+	private WalletServiceImpl walletService;
+
 	@GetMapping
 	public String getHomePage(final Model model) {
-		
+
 		List<Wallet> wallets = walletService.findAll();
 		model.addAttribute("wallets", wallets);
-		
+
 		return "wallet/listWallet";
 	}
-	
+
 	@GetMapping("/new")
 	public String getFormCategoryPage(final Model model) {
 		model.addAttribute("wallet", new Wallet());
@@ -41,7 +41,7 @@ public class WalletController {
 
 		return "wallet/formWallet";
 	}
-	
+
 	@GetMapping("/{id}")
 	public String getFormCategoryPage(@PathVariable String id, final Model model) {
 		model.addAttribute("wallet", walletService.findById(id));
@@ -49,10 +49,9 @@ public class WalletController {
 
 		return "wallet/formWallet";
 	}
-	
+
 	@PostMapping("/register")
-	public String doRegisterData(@ModelAttribute @Valid Wallet wallet, BindingResult bindingResult,
-			final Model model) {
+	public String doRegisterData(@ModelAttribute @Valid Wallet wallet, BindingResult bindingResult, final Model model) {
 
 		System.out.println("### BindingResult ###");
 		bindingResult.getAllErrors().forEach(System.out::println);
@@ -67,7 +66,7 @@ public class WalletController {
 		walletService.register(wallet);
 		return "redirect:/carteira";
 	}
-	
+
 	@PostMapping("/delete")
 	public String doRegisterData(String id, Model model) {
 		walletService.deleteById(id);

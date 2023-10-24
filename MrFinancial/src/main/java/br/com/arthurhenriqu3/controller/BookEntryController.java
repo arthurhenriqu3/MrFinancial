@@ -17,9 +17,9 @@ import br.com.arthurhenriqu3.model.BookEntry;
 import br.com.arthurhenriqu3.model.Category;
 import br.com.arthurhenriqu3.model.enums.StatusEnum;
 import br.com.arthurhenriqu3.model.enums.TypeEnum;
-import br.com.arthurhenriqu3.service.BookEntryService;
-import br.com.arthurhenriqu3.service.CategoryService;
-import br.com.arthurhenriqu3.service.WalletService;
+import br.com.arthurhenriqu3.service.impl.BookEntryServiceImpl;
+import br.com.arthurhenriqu3.service.impl.CategoryServiceImpl;
+import br.com.arthurhenriqu3.service.impl.WalletServiceImpl;
 import jakarta.validation.Valid;
 
 @Controller
@@ -27,19 +27,19 @@ import jakarta.validation.Valid;
 public class BookEntryController {
 
 	@Autowired
-	private BookEntryService bookEntryService;
+	private BookEntryServiceImpl bookEntryService;
 
 	@Autowired
-	private CategoryService categoryService;
+	private CategoryServiceImpl categoryService;
 
 	@Autowired
-	private WalletService walletService;
+	private WalletServiceImpl walletService;
 	
 	private final String path = "bookEntry/";
 
 	@GetMapping
 	public String getAllCategoryPage(final Model model) {
-		model.addAttribute("bookEntries", bookEntryService.findAll(Sort.by(Sort.Direction.ASC, "name")));
+		model.addAttribute("bookEntries", bookEntryService.findAll(Sort.by(Sort.Direction.DESC, "date")));
 		return path + "listBookEntry";
 	}
 
