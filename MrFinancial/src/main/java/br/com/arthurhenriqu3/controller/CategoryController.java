@@ -30,20 +30,20 @@ public class CategoryController {
 	private CategoryService categoryService;
 
 	@GetMapping
-	public String getAllCategoryPage(final Model model) {
+	public String getListAllPage(final Model model) {
 		model.addAttribute("categories", categoryService
 				.findAll(Sort.by(Sort.Direction.ASC, "parent.name").and(Sort.by(Sort.Direction.ASC, "name"))));
 		return "category/listCategory";
 	}
 
 	@GetMapping("/new")
-	public String getFormCategoryPage(final Model model) {
-		return getFormCategoryPage(model, TypeEnum.DESPESA, new Category());
+	public String getFormPage(final Model model) {
+		return getFormPage(model, TypeEnum.DESPESA, new Category());
 	}
 
 	@GetMapping("/{id}")
-	public String getFormCategoryPage(@PathVariable String id, final Model model) {
-		return getFormCategoryPage(model, null, categoryService.findById(id));
+	public String getFormPage(@PathVariable String id, final Model model) {
+		return getFormPage(model, null, categoryService.findById(id));
 	}
 
 	@PostMapping("/register")
@@ -54,7 +54,7 @@ public class CategoryController {
 		bindingResult.getAllErrors().forEach(System.out::println);
 
 		if (bindingResult.hasErrors()) {
-			return getFormCategoryPage(model, null, category);
+			return getFormPage(model, null, category);
 		}
 
 		categoryService.register(category);
@@ -82,7 +82,7 @@ public class CategoryController {
 		return new ResponseEntity<List<Category>>(categoryService.findAllByType(type), HttpStatus.OK);
 	}
 
-	private String getFormCategoryPage(Model model, TypeEnum type, Category category) {
+	private String getFormPage(Model model, TypeEnum type, Category category) {
 		model.addAttribute("types", Arrays.asList(TypeEnum.values()));
 		model.addAttribute("status", Arrays.asList(StatusEnum.values()));
 		model.addAttribute("category", category);

@@ -13,73 +13,73 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import br.com.arthurhenriqu3.model.Wallet;
+import br.com.arthurhenriqu3.model.User;
 import br.com.arthurhenriqu3.model.enums.StatusEnum;
-import br.com.arthurhenriqu3.service.WalletService;
+import br.com.arthurhenriqu3.service.UserService;
 import jakarta.validation.Valid;
 
 @Controller
-@RequestMapping("/carteira")
-public class WalletController {
+@RequestMapping("/usuario")
+public class UserController {
 
 	@Autowired
-	private WalletService walletService;
+	private UserService userService;
 
 	@GetMapping
 	public String getHomePage(final Model model) {
 
-		List<Wallet> wallets = walletService.findAll();
-		model.addAttribute("wallets", wallets);
+		List<User> users = userService.findAll();
+		model.addAttribute("users", users);
 
-		return "wallet/listWallet";
+		return "user/listUser";
 	}
 
 	@GetMapping("/new")
 	public String getFormPage(final Model model) {
-		model.addAttribute("wallet", new Wallet());
+		model.addAttribute("user", new User());
 		model.addAttribute("status", Arrays.asList(StatusEnum.values()));
 
-		return "wallet/formWallet";
+		return "user/formUser";
 	}
 
 	@GetMapping("/{id}")
 	public String getFormPage(@PathVariable String id, final Model model) {
-		model.addAttribute("wallet", walletService.findById(id));
+		model.addAttribute("user", userService.findById(id));
 		model.addAttribute("status", Arrays.asList(StatusEnum.values()));
 
-		return "wallet/formWallet";
+		return "user/formUser";
 	}
 
 	@PostMapping("/register")
-	public String doRegisterData(@ModelAttribute @Valid Wallet wallet, BindingResult bindingResult, final Model model) {
+	public String doRegisterData(@ModelAttribute @Valid User user, BindingResult bindingResult, final Model model) {
 
 		System.out.println("### BindingResult ###");
 		bindingResult.getAllErrors().forEach(System.out::println);
 
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("wallet", wallet);
+			model.addAttribute("user", user);
 			model.addAttribute("status", Arrays.asList(StatusEnum.values()));
 
 			return "wallet/formWallet";
 		}
 
-		walletService.register(wallet);
+		userService.register(user);
 		return "redirect:/carteira";
 	}
 
 	@PostMapping("/delete")
 	public String doRegisterData(String id, Model model) {
-		walletService.deleteById(id);
+		userService.deleteById(id);
 		return "redirect:/carteira";
 	}
 
 	@PostMapping("/visible")
 	public String doUpdateVisible(String id, String status) {
 
-		Wallet w = walletService.findById(id);
-		w.setStatus(status.equals(StatusEnum.ATIVO.getValue()) ? StatusEnum.INATIVO : StatusEnum.ATIVO);
+		User u = userService.findById(id);
+		u.setStatus(status.equals(StatusEnum.ATIVO.getValue()) ? StatusEnum.INATIVO : StatusEnum.ATIVO);
 
-		walletService.register(w);
+		userService.register(u);
 		return "redirect:/carteira";
 	}
 }

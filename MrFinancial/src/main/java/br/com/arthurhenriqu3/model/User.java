@@ -1,12 +1,11 @@
 package br.com.arthurhenriqu3.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-
-import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -21,17 +20,13 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "tb_wallet")
-public class Wallet implements Serializable {
+@Table(name = "tb_user")
+public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -39,17 +34,20 @@ public class Wallet implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 
-	@ManyToOne
-	@JsonProperty(access = Access.WRITE_ONLY)
-	@JoinColumn(name = "user_id", nullable = true)
-	private User user;
-
-	@NotBlank
-	@NotEmpty
-	@NotNull
-	@Length(max = 100)
-	@Column(nullable = false)
+	@Column
 	private String name;
+
+	@Column
+	private String email;
+
+	@Column
+	private String phone;
+
+	@Column
+	private LocalDate birthDate;
+
+	@Column
+	private String password;
 
 	@NotNull
 	@Column(nullable = false)
@@ -57,22 +55,25 @@ public class Wallet implements Serializable {
 	private StatusEnum status;
 
 	@JsonProperty(access = Access.WRITE_ONLY)
-	@OneToMany(mappedBy = "wallet", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<BookEntry> bookEntries;
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Wallet> wallets;
 
-	public Wallet() {
-		this.bookEntries = new ArrayList<BookEntry>();
+	public User() {
+		this.wallets = new ArrayList<Wallet>();
 		this.status = StatusEnum.INATIVO;
 	}
 
-	public Wallet(UUID id, User user, @NotBlank @NotEmpty @NotNull @Length(max = 100) String name,
-			@NotNull StatusEnum status, List<BookEntry> bookEntries) {
+	public User(UUID id, String name, String email, String phone, LocalDate birthDate, String password,
+			@NotNull StatusEnum status, List<Wallet> wallets) {
 		super();
 		this.id = id;
-		this.user = user;
 		this.name = name;
+		this.email = email;
+		this.phone = phone;
+		this.birthDate = birthDate;
+		this.password = password;
 		this.status = status;
-		this.bookEntries = bookEntries;
+		this.wallets = wallets;
 	}
 
 	public UUID getId() {
@@ -91,20 +92,52 @@ public class Wallet implements Serializable {
 		this.name = name;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public LocalDate getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(LocalDate birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public List<Wallet> getWallets() {
+		return wallets;
+	}
+
+	public void setWallets(List<Wallet> wallets) {
+		this.wallets = wallets;
+	}
+
 	public StatusEnum getStatus() {
 		return status;
 	}
 
 	public void setStatus(StatusEnum status) {
 		this.status = status;
-	}
-
-	public List<BookEntry> getBookEntries() {
-		return bookEntries;
-	}
-
-	public void setBookEntries(List<BookEntry> bookEntries) {
-		this.bookEntries = bookEntries;
 	}
 
 	@Override
@@ -120,12 +153,7 @@ public class Wallet implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Wallet other = (Wallet) obj;
+		User other = (User) obj;
 		return Objects.equals(id, other.id);
-	}
-
-	@Override
-	public String toString() {
-		return "Wallet [id=" + id + ", name=" + name + "]";
 	}
 }

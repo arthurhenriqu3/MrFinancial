@@ -17,9 +17,9 @@ import br.com.arthurhenriqu3.model.BookEntry;
 import br.com.arthurhenriqu3.model.Category;
 import br.com.arthurhenriqu3.model.enums.StatusEnum;
 import br.com.arthurhenriqu3.model.enums.TypeEnum;
-import br.com.arthurhenriqu3.service.impl.BookEntryServiceImpl;
-import br.com.arthurhenriqu3.service.impl.CategoryServiceImpl;
-import br.com.arthurhenriqu3.service.impl.WalletServiceImpl;
+import br.com.arthurhenriqu3.service.BookEntryService;
+import br.com.arthurhenriqu3.service.CategoryService;
+import br.com.arthurhenriqu3.service.WalletService;
 import jakarta.validation.Valid;
 
 @Controller
@@ -27,24 +27,24 @@ import jakarta.validation.Valid;
 public class BookEntryController {
 
 	@Autowired
-	private BookEntryServiceImpl bookEntryService;
+	private BookEntryService bookEntryService;
 
 	@Autowired
-	private CategoryServiceImpl categoryService;
+	private CategoryService categoryService;
 
 	@Autowired
-	private WalletServiceImpl walletService;
+	private WalletService walletService;
 	
 	private final String path = "bookEntry/";
 
 	@GetMapping
-	public String getAllCategoryPage(final Model model) {
+	public String getListAllPage(final Model model) {
 		model.addAttribute("bookEntries", bookEntryService.findAll(Sort.by(Sort.Direction.DESC, "date")));
 		return path + "listBookEntry";
 	}
 
 	@GetMapping("/new")
-	public String getFormCategoryPage(final Model model) {
+	public String getFormPage(final Model model) {
 		model.addAttribute("categories", categoryService.findAllByType(TypeEnum.DESPESA.getCode().toString(),
 				Sort.by(Sort.Direction.ASC, "name")));
 		model.addAttribute("wallets", walletService.findAll());
@@ -57,7 +57,7 @@ public class BookEntryController {
 	}
 
 	@GetMapping("/{id}")
-	public String getFormCategoryPage(@PathVariable String id, final Model model) {
+	public String getFormPage(@PathVariable String id, final Model model) {
 
 		BookEntry be = bookEntryService.findById(id);
 

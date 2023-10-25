@@ -2,6 +2,7 @@ package br.com.arthurhenriqu3;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +12,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import br.com.arthurhenriqu3.model.BookEntry;
 import br.com.arthurhenriqu3.model.Category;
+import br.com.arthurhenriqu3.model.User;
 import br.com.arthurhenriqu3.model.Wallet;
 import br.com.arthurhenriqu3.model.enums.StatusEnum;
 import br.com.arthurhenriqu3.model.enums.TypeEnum;
 import br.com.arthurhenriqu3.repository.BookEntryRepository;
 import br.com.arthurhenriqu3.repository.CategoryRepository;
+import br.com.arthurhenriqu3.repository.UserRepository;
 import br.com.arthurhenriqu3.repository.WalletRepository;
 
 @SpringBootApplication
@@ -30,15 +33,23 @@ public class MrFinancialApplication implements CommandLineRunner {
 	@Autowired
 	private BookEntryRepository bookEntryRepository;
 
+	@Autowired
+	private UserRepository userRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(MrFinancialApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
+		// USUÁRIO
+		User user = new User(null, "Arthur", "arthur@gmail.com", "6198300", LocalDate.of(1990, 8, 11), "123456",
+				StatusEnum.INATIVO, new ArrayList<Wallet>());
+		userRepository.save(user);
+
 		// CARTEIRA
-		Wallet wPrincipal = new Wallet("Principal", StatusEnum.ATIVO, null);
-		Wallet wSecundaria = new Wallet("Secundária", StatusEnum.ATIVO, null);
+		Wallet wPrincipal = new Wallet(null, user, "Principal", StatusEnum.ATIVO, null);
+		Wallet wSecundaria = new Wallet(null, null, "Secundária", StatusEnum.ATIVO, null);
 
 		walletRepository.saveAll(Arrays.asList(wPrincipal, wSecundaria));
 
