@@ -46,7 +46,7 @@ public class MrFinancialApplication implements CommandLineRunner {
 		User user = new User(null, "Arthur", "arthur@gmail.com", "6198300", LocalDate.of(1990, 8, 11), "123456",
 				StatusEnum.INATIVO, new ArrayList<Wallet>());
 		userRepository.save(user);
-
+ 
 		// CARTEIRA
 		Wallet wPrincipal = new Wallet(null, user, "Principal", StatusEnum.ATIVO, null);
 		Wallet wSecundaria = new Wallet(null, null, "Secundária", StatusEnum.ATIVO, null);
@@ -104,5 +104,4 @@ public class MrFinancialApplication implements CommandLineRunner {
 				Arrays.asList(beAluguel1, beCondominio1, beAluguel2, beCondominio2, beEsporte, beSalario1, beSalario2));
 
 	}
-
 }
