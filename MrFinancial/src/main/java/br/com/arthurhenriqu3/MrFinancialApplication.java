@@ -14,6 +14,8 @@ import br.com.arthurhenriqu3.model.BookEntry;
 import br.com.arthurhenriqu3.model.Category;
 import br.com.arthurhenriqu3.model.User;
 import br.com.arthurhenriqu3.model.Wallet;
+import br.com.arthurhenriqu3.model.dto.CategoryDTO;
+import br.com.arthurhenriqu3.model.dto.mapper.CategoryDTOMapper;
 import br.com.arthurhenriqu3.model.enums.StatusEnum;
 import br.com.arthurhenriqu3.model.enums.TypeEnum;
 import br.com.arthurhenriqu3.repository.BookEntryRepository;
@@ -36,6 +38,9 @@ public class MrFinancialApplication implements CommandLineRunner {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private CategoryDTOMapper categoryDTOMapper;
+
 	public static void main(String[] args) {
 		SpringApplication.run(MrFinancialApplication.class, args);
 	}
@@ -46,7 +51,7 @@ public class MrFinancialApplication implements CommandLineRunner {
 		User user = new User("Arthur", "arthur@gmail.com", "6198300", LocalDate.of(1990, 8, 11), "123456",
 				StatusEnum.INATIVO, new ArrayList<Wallet>());
 		userRepository.save(user);
- 
+
 		// CARTEIRA
 		Wallet wPrincipal = new Wallet(user, "Principal", StatusEnum.ATIVO, null);
 		Wallet wSecundaria = new Wallet(null, "Secundária", StatusEnum.ATIVO, null);
@@ -54,18 +59,28 @@ public class MrFinancialApplication implements CommandLineRunner {
 		walletRepository.saveAll(Arrays.asList(wPrincipal, wSecundaria));
 
 		// CATEGORIA DE DESPESAS
-		Category dCustoFixo = new Category(null, "Custo Fixo", null, null, StatusEnum.ATIVO, TypeEnum.DESPESA, null);
-		Category dConforto = new Category(null, "Conforto", null, null, StatusEnum.ATIVO, TypeEnum.DESPESA, null);
-		Category dMetas = new Category(null, "Metas", null, null, StatusEnum.ATIVO, TypeEnum.DESPESA, null);
-		Category dPrazeres = new Category(null, "Prazeres", null, null, StatusEnum.ATIVO, TypeEnum.DESPESA, null);
+		Category dCustoFixo = new Category(null, "Custo Fixo", null, null, StatusEnum.ATIVO, TypeEnum.DESPESA,
+				new ArrayList<Category>());
+		Category dConforto = new Category(null, "Conforto", null, null, StatusEnum.ATIVO, TypeEnum.DESPESA,
+				new ArrayList<Category>());
+		Category dMetas = new Category(null, "Metas", null, null, StatusEnum.ATIVO, TypeEnum.DESPESA,
+				new ArrayList<Category>());
+		Category dPrazeres = new Category(null, "Prazeres", null, null, StatusEnum.ATIVO, TypeEnum.DESPESA,
+				new ArrayList<Category>());
 		Category dLiberdadeFinanceira = new Category(null, "Liberdade Financeira", null, null, StatusEnum.ATIVO,
-				TypeEnum.DESPESA, null);
+				TypeEnum.DESPESA, new ArrayList<Category>());
 		Category dConhecimento = new Category(null, "Conhecimento", null, null, StatusEnum.ATIVO, TypeEnum.DESPESA,
-				null);
+				new ArrayList<Category>());
 
 		// CATEGORIA DE DESPESAS
-		Category rSalario = new Category(null, "Salário", null, null, StatusEnum.ATIVO, TypeEnum.RECEITA, null);
-		Category rRendimento = new Category(null, "Rendimentos", null, null, StatusEnum.ATIVO, TypeEnum.RECEITA, null);
+		Category rSalario = new Category(null, "Salário", null, null, StatusEnum.ATIVO, TypeEnum.RECEITA,
+				new ArrayList<Category>());
+		Category rRendimento = new Category(null, "Rendimentos", null, null, StatusEnum.ATIVO, TypeEnum.RECEITA,
+				new ArrayList<Category>());
+		rRendimento.getChildren().add(rSalario);
+		rRendimento.getChildren().add(dPrazeres);
+		rRendimento.getChildren().add(dLiberdadeFinanceira);
+		dPrazeres.getChildren().add(dMetas);
 
 		// INSERT BD CATEGORIAS
 		categoryRepository.saveAll(Arrays.asList(dCustoFixo, dConforto, dMetas, dPrazeres, dLiberdadeFinanceira,
@@ -102,6 +117,9 @@ public class MrFinancialApplication implements CommandLineRunner {
 
 		bookEntryRepository.saveAll(
 				Arrays.asList(beAluguel1, beCondominio1, beAluguel2, beCondominio2, beEsporte, beSalario1, beSalario2));
+
+		System.out.println("TESTE DTO MAPPER CATEGORY");
+		CategoryDTO categoryDTO = categoryDTOMapper.toDTO(rRendimento);
 
 	}
 }

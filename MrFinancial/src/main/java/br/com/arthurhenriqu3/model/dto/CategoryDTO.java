@@ -18,5 +18,5 @@ public record CategoryDTO(
 		String image, 
 		@NotNull StatusEnum status,
 		@NotNull TypeEnum type,
-		List<Category> children
+		List<CategoryDTO> children
 	){}
