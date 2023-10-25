@@ -55,7 +55,7 @@ public class Category implements Serializable {
 	@Column(nullable = false, length = 50)
 	private String name;
 
-	@Column
+	@Column(columnDefinition = "TEXT")
 	private String description;
 
 	@Column

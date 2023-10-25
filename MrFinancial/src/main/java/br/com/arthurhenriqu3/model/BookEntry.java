@@ -56,7 +56,7 @@ public class BookEntry implements Serializable {
 	@Column(nullable = false)
 	private String name;
 
-	@Column
+	@Column(columnDefinition = "TEXT")
 	private String description;
 
 	@NotNull

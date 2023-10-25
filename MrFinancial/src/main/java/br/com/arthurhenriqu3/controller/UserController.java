@@ -60,17 +60,17 @@ public class UserController {
 			model.addAttribute("user", user);
 			model.addAttribute("status", Arrays.asList(StatusEnum.values()));
 
-			return "wallet/formWallet";
+			return "usuario/formUser";
 		}
 
 		userService.register(user);
-		return "redirect:/carteira";
+		return "redirect:/usuario";
 	}
 
 	@PostMapping("/delete")
 	public String doRegisterData(String id, Model model) {
 		userService.deleteById(id);
-		return "redirect:/carteira";
+		return "redirect:/usuario";
 	}
 
 	@PostMapping("/visible")
@@ -80,6 +80,6 @@ public class UserController {
 		u.setStatus(status.equals(StatusEnum.ATIVO.getValue()) ? StatusEnum.INATIVO : StatusEnum.ATIVO);
 
 		userService.register(u);
-		return "redirect:/carteira";
+		return "redirect:/usuario"; 
 	}
 }
