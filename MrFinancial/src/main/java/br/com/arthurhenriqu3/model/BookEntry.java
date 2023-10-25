@@ -69,6 +69,7 @@ public class BookEntry implements Serializable {
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate date;
 
+	@NotNull
 	@Column(nullable = false)
 	@Convert(converter = StatusConverter.class)
 	private StatusEnum status;
@@ -78,8 +79,8 @@ public class BookEntry implements Serializable {
 		this.status = StatusEnum.INATIVO;
 	}
 
-	public BookEntry(@NotNull Category category, @NotNull Wallet wallet, @NotNull @Length(max = 100) String name,
-			String description, @NotNull @Positive BigDecimal value, @NotNull LocalDate date, StatusEnum status) {
+	public BookEntry(Category category, Wallet wallet, String name, String description, BigDecimal value,
+			LocalDate date, StatusEnum status) {
 		super();
 		this.category = category;
 		this.wallet = wallet;

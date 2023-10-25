@@ -63,10 +63,9 @@ public class User implements Serializable {
 		this.status = StatusEnum.INATIVO;
 	}
 
-	public User(UUID id, String name, String email, String phone, LocalDate birthDate, String password,
-			@NotNull StatusEnum status, List<Wallet> wallets) {
+	public User(String name, String email, String phone, LocalDate birthDate, String password, StatusEnum status,
+			List<Wallet> wallets) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.phone = phone;

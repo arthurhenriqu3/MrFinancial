@@ -15,7 +15,8 @@ public class CategoryDTOMapper implements DTOMapper<Category, CategoryDTO> {
 	}
 
 	@Override
-	public Category toEntity(CategoryDTO d) {
-		return new Category(d.parent(), d.name(), d.description(), d.image(), d.status(), d.type(), d.children());
+	public Category toEntity(CategoryDTO categoryDto) {
+		return new Category(categoryDto.parent(), categoryDto.name(), categoryDto.description(), categoryDto.image(),
+				categoryDto.status(), categoryDto.type(), categoryDto.children());
 	}
 }

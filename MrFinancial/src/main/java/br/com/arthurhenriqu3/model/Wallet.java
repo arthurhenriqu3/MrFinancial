@@ -65,10 +65,8 @@ public class Wallet implements Serializable {
 		this.status = StatusEnum.INATIVO;
 	}
 
-	public Wallet(UUID id, User user, @NotBlank @NotEmpty @NotNull @Length(max = 100) String name,
-			@NotNull StatusEnum status, List<BookEntry> bookEntries) {
+	public Wallet(User user, String name, StatusEnum status, List<BookEntry> bookEntries) {
 		super();
-		this.id = id;
 		this.user = user;
 		this.name = name;
 		this.status = status;
@@ -105,6 +103,14 @@ public class Wallet implements Serializable {
 
 	public void setBookEntries(List<BookEntry> bookEntries) {
 		this.bookEntries = bookEntries;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override

@@ -19,6 +19,4 @@ public record CategoryDTO(
 		@NotNull StatusEnum status,
 		@NotNull TypeEnum type,
 		List<Category> children
-		
-		)
-{}
+	){}

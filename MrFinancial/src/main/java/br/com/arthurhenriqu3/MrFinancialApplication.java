@@ -43,13 +43,13 @@ public class MrFinancialApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// USUÁRIO
-		User user = new User(null, "Arthur", "arthur@gmail.com", "6198300", LocalDate.of(1990, 8, 11), "123456",
+		User user = new User("Arthur", "arthur@gmail.com", "6198300", LocalDate.of(1990, 8, 11), "123456",
 				StatusEnum.INATIVO, new ArrayList<Wallet>());
 		userRepository.save(user);
  
 		// CARTEIRA
-		Wallet wPrincipal = new Wallet(null, user, "Principal", StatusEnum.ATIVO, null);
-		Wallet wSecundaria = new Wallet(null, null, "Secundária", StatusEnum.ATIVO, null);
+		Wallet wPrincipal = new Wallet(user, "Principal", StatusEnum.ATIVO, null);
+		Wallet wSecundaria = new Wallet(null, "Secundária", StatusEnum.ATIVO, null);
 
 		walletRepository.saveAll(Arrays.asList(wPrincipal, wSecundaria));
 

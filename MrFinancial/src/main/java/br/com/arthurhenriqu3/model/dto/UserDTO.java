@@ -1,0 +1,18 @@
+package br.com.arthurhenriqu3.model.dto;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import br.com.arthurhenriqu3.model.Wallet;
+import br.com.arthurhenriqu3.model.enums.StatusEnum;
+import jakarta.validation.constraints.NotNull;
+
+public record UserDTO(
+		String name,
+		String email,
+		String phone,
+		LocalDate birthDate,
+		String password,
+		@NotNull StatusEnum status,
+		List<Wallet> wallets
+	) {}
