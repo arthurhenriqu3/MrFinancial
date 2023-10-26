@@ -65,9 +65,10 @@ public class Wallet implements Serializable {
 		this.status = StatusEnum.INATIVO;
 	}
 
-	public Wallet(UUID id, String name, StatusEnum status, List<BookEntry> bookEntries) {
+	public Wallet(UUID id, User user, String name, StatusEnum status, List<BookEntry> bookEntries) {
 		super();
 		this.id = id;
+		this.user = user;
 		this.name = name;
 		this.status = status;
 		this.bookEntries = bookEntries;

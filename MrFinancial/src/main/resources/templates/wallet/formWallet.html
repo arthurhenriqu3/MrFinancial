@@ -7,8 +7,10 @@
 
 <body>
 	<div layout:fragment="content" class="mt-3">
-		<form method="post" th:object="${wallet}" th:action="@{/carteira/register}">
+		<form method="post" th:object="${walletDto}" th:action="@{/carteira/register}">
 			<input type="text" th:field="*{id}" hidden />
+			<input type="text" th:field="*{userDTO}" hidden />
+			
 			<div class="form-group row">
 				<label for="name" class="col-sm-2 col-form-label" align="right">Nome:</label>
 				<div class="col-sm-10">

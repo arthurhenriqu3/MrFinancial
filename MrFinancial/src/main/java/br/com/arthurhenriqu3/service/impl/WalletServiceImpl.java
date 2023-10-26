@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.arthurhenriqu3.model.Wallet;
 import br.com.arthurhenriqu3.model.dto.WalletDTO;
 import br.com.arthurhenriqu3.model.dto.mapper.WalletDTOMapper;
 import br.com.arthurhenriqu3.repository.WalletRepository;
@@ -31,8 +30,8 @@ public class WalletServiceImpl implements WalletService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Wallet findById(String id) {
-		return walletRepository.findById(UUID.fromString(id)).orElseThrow(() -> new RuntimeException());
+	public WalletDTO findById(String id) {
+		return walletDTOMapper.toDTO(walletRepository.findById(UUID.fromString(id)).orElseThrow(() -> new RuntimeException()));
 	}
 
 	@Override

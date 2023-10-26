@@ -50,12 +50,10 @@ public class MrFinancialApplication implements CommandLineRunner {
 		
 
 		// CARTEIRA
-		Wallet wPrincipal = new Wallet(null, "Principal", StatusEnum.ATIVO, new ArrayList<BookEntry>());
-		wPrincipal.setUser(user);
+		Wallet wPrincipal = new Wallet(null, user, "Principal", StatusEnum.ATIVO, new ArrayList<BookEntry>());
 		user.getWallets().add(wPrincipal);
 		
-		Wallet wSecundaria = new Wallet(null, "Secundária", StatusEnum.ATIVO, new ArrayList<BookEntry>());
-		wSecundaria.setUser(user2);
+		Wallet wSecundaria = new Wallet(null, user2, "Secundária", StatusEnum.ATIVO, new ArrayList<BookEntry>());
 		user2.getWallets().add(wSecundaria);
 		
 		// CATEGORIA DE DESPESAS

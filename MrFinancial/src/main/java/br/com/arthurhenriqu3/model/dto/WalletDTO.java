@@ -12,9 +12,9 @@ import jakarta.validation.constraints.NotNull;
 
 public record WalletDTO(
 		UUID id,
-		@NotNull UserDTO userDTO,
+		UserDTO userDTO,
 		@NotBlank @NotEmpty @NotNull @Length(max = 100) String name,
-		@NotNull StatusEnum status,
+		StatusEnum status,
 		List<BookEntryDTO> bookEntryDTO
 	){
 	

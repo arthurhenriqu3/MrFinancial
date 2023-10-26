@@ -5,6 +5,7 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import br.com.arthurhenriqu3.model.User;
 import br.com.arthurhenriqu3.model.Wallet;
 import br.com.arthurhenriqu3.model.dto.UserDTO;
 import br.com.arthurhenriqu3.model.dto.WalletDTO;
@@ -29,6 +30,13 @@ public class WalletDTOMapper implements DTOMapper<Wallet, WalletDTO> {
 
 	@Override
 	public Wallet toEntity(WalletDTO walletDto) {
-		return new Wallet(walletDto.id(), walletDto.name(), walletDto.status(), null);
+
+		User user = null;
+
+		if (!Objects.isNull(walletDto.userDTO())) {
+			user = userDTOMapper.toEntity(walletDto.userDTO());
+		}
+
+		return new Wallet(walletDto.id(), user, walletDto.name(), walletDto.status(), null);
 	}
 }

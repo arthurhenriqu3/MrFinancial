@@ -10,7 +10,7 @@ public class UserDTOMapper implements DTOMapper<User, UserDTO> {
 
 	@Override
 	public UserDTO toDTO(User user) {
-		return new UserDTO(user.getName(), user.getEmail(), user.getPhone(), user.getBirthDate(), user.getPassword(),
+		return new UserDTO(user.getId(), user.getName(), user.getEmail(), user.getPhone(), user.getBirthDate(), user.getPassword(),
 				user.getStatus());
 	}
 
