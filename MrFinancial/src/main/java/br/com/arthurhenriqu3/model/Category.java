@@ -81,9 +81,10 @@ public class Category implements Serializable {
 		this.children = new ArrayList<Category>();
 	}
 
-	public Category(Category parent, String name, String description, String image, StatusEnum status, TypeEnum type,
+	public Category(UUID id, Category parent, String name, String description, String image, StatusEnum status, TypeEnum type,
 			List<Category> children) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.image = image;

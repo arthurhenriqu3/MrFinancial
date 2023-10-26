@@ -41,7 +41,7 @@ public class Wallet implements Serializable {
 
 	@ManyToOne
 	@JsonProperty(access = Access.WRITE_ONLY)
-	@JoinColumn(name = "user_id", nullable = true)
+	@JoinColumn(name = "user_id")
 	private User user;
 
 	@NotBlank
@@ -65,9 +65,9 @@ public class Wallet implements Serializable {
 		this.status = StatusEnum.INATIVO;
 	}
 
-	public Wallet(User user, String name, StatusEnum status, List<BookEntry> bookEntries) {
+	public Wallet(UUID id, String name, StatusEnum status, List<BookEntry> bookEntries) {
 		super();
-		this.user = user;
+		this.id = id;
 		this.name = name;
 		this.status = status;
 		this.bookEntries = bookEntries;

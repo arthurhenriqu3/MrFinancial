@@ -2,6 +2,7 @@ package br.com.arthurhenriqu3.model.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.UUID;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -12,6 +13,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 public record BookEntryDTO(
+		UUID id,
 		@NotNull CategoryDTO categoryDto,
 		@NotNull WalletDTO walletDto,
 		@NotBlank @NotEmpty @NotNull @Length(max = 100) String name,

@@ -2,12 +2,16 @@ package br.com.arthurhenriqu3.service.impl;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.arthurhenriqu3.model.Wallet;
+import br.com.arthurhenriqu3.model.dto.WalletDTO;
+import br.com.arthurhenriqu3.model.dto.mapper.WalletDTOMapper;
 import br.com.arthurhenriqu3.repository.WalletRepository;
 import br.com.arthurhenriqu3.service.WalletService;
 
@@ -17,28 +21,36 @@ public class WalletServiceImpl implements WalletService {
 	@Autowired
 	private WalletRepository walletRepository;
 
+	@Autowired
+	private WalletDTOMapper walletDTOMapper;
+
 	@Override
-	public Wallet register(Wallet wallet) {
-		return walletRepository.save(wallet);
+	public WalletDTO register(WalletDTO walletDTO) {
+		return walletDTOMapper.toDTO(walletRepository.save(walletDTOMapper.toEntity(walletDTO)));
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Wallet findById(String id) {
-		return walletRepository.findById(UUID.fromString(id)).get();
+		return walletRepository.findById(UUID.fromString(id)).orElseThrow(() -> new RuntimeException());
 	}
 
 	@Override
 	public void deleteById(String id) {
-		walletRepository.deleteById(UUID.fromString(id));
+		walletRepository
+				.delete(walletRepository.findById(UUID.fromString(id)).orElseThrow(() -> new RuntimeException()));
 	}
 
 	@Override
-	public List<Wallet> findAll() {
-		return walletRepository.findAll();
+	@Transactional(readOnly = true)
+	public List<WalletDTO> findAll() {
+		return walletRepository.findAll().stream().map(w -> walletDTOMapper.toDTO(w)).collect(Collectors.toList());
 	}
 
 	@Override
-	public List<Wallet> findAll(Sort sort) {
-		return walletRepository.findAll(sort);
+	@Transactional(readOnly = true)
+	public List<WalletDTO> findAll(Pageable pageable) {
+		return walletRepository.findAll(pageable).getContent().stream().map(w -> walletDTOMapper.toDTO(w))
+				.collect(Collectors.toList());
 	}
 }

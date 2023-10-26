@@ -79,9 +79,10 @@ public class BookEntry implements Serializable {
 		this.status = StatusEnum.INATIVO;
 	}
 
-	public BookEntry(Category category, Wallet wallet, String name, String description, BigDecimal value,
+	public BookEntry(UUID id, Category category, Wallet wallet, String name, String description, BigDecimal value,
 			LocalDate date, StatusEnum status) {
 		super();
+		this.id = id;
 		this.category = category;
 		this.wallet = wallet;
 		this.name = name;

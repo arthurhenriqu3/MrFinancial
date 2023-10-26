@@ -14,8 +14,6 @@ import br.com.arthurhenriqu3.model.BookEntry;
 import br.com.arthurhenriqu3.model.Category;
 import br.com.arthurhenriqu3.model.User;
 import br.com.arthurhenriqu3.model.Wallet;
-import br.com.arthurhenriqu3.model.dto.CategoryDTO;
-import br.com.arthurhenriqu3.model.dto.mapper.CategoryDTOMapper;
 import br.com.arthurhenriqu3.model.enums.StatusEnum;
 import br.com.arthurhenriqu3.model.enums.TypeEnum;
 import br.com.arthurhenriqu3.repository.BookEntryRepository;
@@ -38,9 +36,6 @@ public class MrFinancialApplication implements CommandLineRunner {
 	@Autowired
 	private UserRepository userRepository;
 
-	@Autowired
-	private CategoryDTOMapper categoryDTOMapper;
-
 	public static void main(String[] args) {
 		SpringApplication.run(MrFinancialApplication.class, args);
 	}
@@ -50,41 +45,38 @@ public class MrFinancialApplication implements CommandLineRunner {
 		// USUÁRIO
 		User user = new User("Arthur", "arthur@gmail.com", "6198300", LocalDate.of(1990, 8, 11), "123456",
 				StatusEnum.INATIVO, new ArrayList<Wallet>());
-		userRepository.save(user);
+		User user2 = new User("Barros", "barros@gmail.com", "6198250", LocalDate.of(1980, 5, 1), "1234",
+				StatusEnum.INATIVO, new ArrayList<Wallet>());
+		
 
 		// CARTEIRA
-		Wallet wPrincipal = new Wallet(user, "Principal", StatusEnum.ATIVO, null);
-		Wallet wSecundaria = new Wallet(null, "Secundária", StatusEnum.ATIVO, null);
-
-		walletRepository.saveAll(Arrays.asList(wPrincipal, wSecundaria));
-
+		Wallet wPrincipal = new Wallet(null, "Principal", StatusEnum.ATIVO, new ArrayList<BookEntry>());
+		wPrincipal.setUser(user);
+		user.getWallets().add(wPrincipal);
+		
+		Wallet wSecundaria = new Wallet(null, "Secundária", StatusEnum.ATIVO, new ArrayList<BookEntry>());
+		wSecundaria.setUser(user2);
+		user2.getWallets().add(wSecundaria);
+		
 		// CATEGORIA DE DESPESAS
-		Category dCustoFixo = new Category(null, "Custo Fixo", null, null, StatusEnum.ATIVO, TypeEnum.DESPESA,
+		Category dCustoFixo = new Category(null, null, "Custo Fixo", null, null, StatusEnum.ATIVO, TypeEnum.DESPESA,
 				new ArrayList<Category>());
-		Category dConforto = new Category(null, "Conforto", null, null, StatusEnum.ATIVO, TypeEnum.DESPESA,
+		Category dConforto = new Category(null, null, "Conforto", null, null, StatusEnum.ATIVO, TypeEnum.DESPESA,
 				new ArrayList<Category>());
-		Category dMetas = new Category(null, "Metas", null, null, StatusEnum.ATIVO, TypeEnum.DESPESA,
+		Category dMetas = new Category(null, null, "Metas", null, null, StatusEnum.ATIVO, TypeEnum.DESPESA,
 				new ArrayList<Category>());
-		Category dPrazeres = new Category(null, "Prazeres", null, null, StatusEnum.ATIVO, TypeEnum.DESPESA,
+		Category dPrazeres = new Category(null, null, "Prazeres", null, null, StatusEnum.ATIVO, TypeEnum.DESPESA,
 				new ArrayList<Category>());
-		Category dLiberdadeFinanceira = new Category(null, "Liberdade Financeira", null, null, StatusEnum.ATIVO,
+		Category dLiberdadeFinanceira = new Category(null, null, "Liberdade Financeira", null, null, StatusEnum.ATIVO,
 				TypeEnum.DESPESA, new ArrayList<Category>());
-		Category dConhecimento = new Category(null, "Conhecimento", null, null, StatusEnum.ATIVO, TypeEnum.DESPESA,
-				new ArrayList<Category>());
+		Category dConhecimento = new Category(null, null, "Conhecimento", null, null, StatusEnum.ATIVO,
+				TypeEnum.DESPESA, new ArrayList<Category>());
 
 		// CATEGORIA DE DESPESAS
-		Category rSalario = new Category(null, "Salário", null, null, StatusEnum.ATIVO, TypeEnum.RECEITA,
+		Category rSalario = new Category(null, null, "Salário", null, null, StatusEnum.ATIVO, TypeEnum.RECEITA,
 				new ArrayList<Category>());
-		Category rRendimento = new Category(null, "Rendimentos", null, null, StatusEnum.ATIVO, TypeEnum.RECEITA,
+		Category rRendimento = new Category(null, null, "Rendimentos", null, null, StatusEnum.ATIVO, TypeEnum.RECEITA,
 				new ArrayList<Category>());
-		rRendimento.getChildren().add(rSalario);
-		rRendimento.getChildren().add(dPrazeres);
-		rRendimento.getChildren().add(dLiberdadeFinanceira);
-		dPrazeres.getChildren().add(dMetas);
-
-		// INSERT BD CATEGORIAS
-		categoryRepository.saveAll(Arrays.asList(dCustoFixo, dConforto, dMetas, dPrazeres, dLiberdadeFinanceira,
-				dConhecimento, rSalario, rRendimento));
 
 		// LANÇAMENTOS
 		/**
@@ -94,32 +86,37 @@ public class MrFinancialApplication implements CommandLineRunner {
 		 * LocalDate date, StatusEnum status) {
 		 * 
 		 */
-		BookEntry beAluguel1 = new BookEntry(dCustoFixo, wPrincipal, "Aluguel 01/12", null, new BigDecimal(2800),
+		BookEntry beAluguel1 = new BookEntry(null, dCustoFixo, wPrincipal, "Aluguel 01/12", null, new BigDecimal(2800),
 				LocalDate.of(2023, 9, 3), StatusEnum.ATIVO);
 
-		BookEntry beCondominio1 = new BookEntry(dCustoFixo, wPrincipal, "Condominio 01/12", null, new BigDecimal(2800),
-				LocalDate.of(2023, 9, 3), StatusEnum.ATIVO);
+		BookEntry beCondominio1 = new BookEntry(null, dCustoFixo, wPrincipal, "Condominio 01/12", null,
+				new BigDecimal(2800), LocalDate.of(2023, 9, 3), StatusEnum.ATIVO);
 
-		BookEntry beAluguel2 = new BookEntry(dCustoFixo, wPrincipal, "Aluguel 02/12", null, new BigDecimal(2800),
+		BookEntry beAluguel2 = new BookEntry(null, dCustoFixo, wPrincipal, "Aluguel 02/12", null, new BigDecimal(2800),
 				LocalDate.of(2023, 10, 3), StatusEnum.ATIVO);
 
-		BookEntry beCondominio2 = new BookEntry(dCustoFixo, wPrincipal, "Condominio 02/12", null, new BigDecimal(2800),
-				LocalDate.of(2023, 9, 3), StatusEnum.ATIVO);
+		BookEntry beCondominio2 = new BookEntry(null, dCustoFixo, wPrincipal, "Condominio 02/12", null,
+				new BigDecimal(2800), LocalDate.of(2023, 9, 3), StatusEnum.ATIVO);
 
-		BookEntry beEsporte = new BookEntry(dPrazeres, wPrincipal, "Provas", null, new BigDecimal(1500),
+		BookEntry beEsporte = new BookEntry(null, dPrazeres, wPrincipal, "Provas", null, new BigDecimal(1500),
 				LocalDate.of(2023, 10, 9), StatusEnum.ATIVO);
 
-		BookEntry beSalario1 = new BookEntry(rSalario, wPrincipal, "Salario", null, new BigDecimal(5000),
+		BookEntry beSalario1 = new BookEntry(null, rSalario, wPrincipal, "Salario", null, new BigDecimal(5000),
 				LocalDate.of(2023, 9, 2), StatusEnum.ATIVO);
 
-		BookEntry beSalario2 = new BookEntry(rSalario, wPrincipal, "Salario", null, new BigDecimal(5000),
+		BookEntry beSalario2 = new BookEntry(null, rSalario, wPrincipal, "Salario", null, new BigDecimal(5000),
 				LocalDate.of(2023, 10, 2), StatusEnum.ATIVO);
+
+		
+		userRepository.saveAll(Arrays.asList(user, user2));
+		
+		walletRepository.saveAll(Arrays.asList(wPrincipal, wSecundaria));
+
+		// INSERT BD CATEGORIAS
+		categoryRepository.saveAll(Arrays.asList(dCustoFixo, dConforto, dMetas, dPrazeres, dLiberdadeFinanceira,
+				dConhecimento, rSalario, rRendimento));
 
 		bookEntryRepository.saveAll(
 				Arrays.asList(beAluguel1, beCondominio1, beAluguel2, beCondominio2, beEsporte, beSalario1, beSalario2));
-
-		System.out.println("TESTE DTO MAPPER CATEGORY");
-		CategoryDTO categoryDTO = categoryDTOMapper.toDTO(rRendimento);
-
 	}
 }
