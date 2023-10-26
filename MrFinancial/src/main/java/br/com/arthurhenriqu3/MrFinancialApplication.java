@@ -44,9 +44,9 @@ public class MrFinancialApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		// USUÁRIO
 		User user = new User("Arthur", "arthur@gmail.com", "6198300", LocalDate.of(1990, 8, 11), "123456",
-				StatusEnum.INATIVO, new ArrayList<Wallet>());
+				StatusEnum.INATIVO);
 		User user2 = new User("Barros", "barros@gmail.com", "6198250", LocalDate.of(1980, 5, 1), "1234",
-				StatusEnum.INATIVO, new ArrayList<Wallet>());
+				StatusEnum.INATIVO);
 		
 
 		// CARTEIRA

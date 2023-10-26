@@ -63,8 +63,7 @@ public class User implements Serializable {
 		this.status = StatusEnum.INATIVO;
 	}
 
-	public User(String name, String email, String phone, LocalDate birthDate, String password, StatusEnum status,
-			List<Wallet> wallets) {
+	public User(String name, String email, String phone, LocalDate birthDate, String password, StatusEnum status) {
 		super();
 		this.name = name;
 		this.email = email;
@@ -72,7 +71,7 @@ public class User implements Serializable {
 		this.birthDate = birthDate;
 		this.password = password;
 		this.status = status;
-		this.wallets = wallets;
+		this.wallets = new ArrayList<Wallet>();
 	}
 
 	public UUID getId() {

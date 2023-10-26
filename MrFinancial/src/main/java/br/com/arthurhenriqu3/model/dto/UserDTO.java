@@ -1,7 +1,6 @@
 package br.com.arthurhenriqu3.model.dto;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import br.com.arthurhenriqu3.model.enums.StatusEnum;
 import jakarta.validation.constraints.NotNull;
@@ -12,6 +11,5 @@ public record UserDTO(
 		String phone,
 		LocalDate birthDate,
 		String password,
-		@NotNull StatusEnum status,
-		List<WalletDTO> wallets
+		@NotNull StatusEnum status
 	) {}
