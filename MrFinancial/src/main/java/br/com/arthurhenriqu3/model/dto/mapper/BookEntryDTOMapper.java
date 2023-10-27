@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.com.arthurhenriqu3.model.BookEntry;
-import br.com.arthurhenriqu3.model.dto.BookEntryDTO;
+import br.com.arthurhenriqu3.model.dto.BookEntryDto;
 
 @Component
-public class BookEntryDTOMapper implements DTOMapper<BookEntry, BookEntryDTO> {
+public class BookEntryDTOMapper implements DTOMapper<BookEntry, BookEntryDto> {
 
 	@Autowired
 	private CategoryDTOMapper categoryDTOMapper;
@@ -16,16 +16,20 @@ public class BookEntryDTOMapper implements DTOMapper<BookEntry, BookEntryDTO> {
 	private WalletDTOMapper walletDTOMapper;
 
 	@Override
-	public BookEntryDTO toDTO(BookEntry bookEntry) {
-		return new BookEntryDTO(bookEntry.getId(), categoryDTOMapper.toDTO(bookEntry.getCategory()),
-				walletDTOMapper.toDTO(bookEntry.getWallet()), bookEntry.getName(), bookEntry.getDescription(),
-				bookEntry.getValue(), bookEntry.getDate(), bookEntry.getStatus());
+	public BookEntryDto toDTO(BookEntry bookEntry) {
+		return null;
+
+//		return new BookEntryDto(bookEntry.getId(), categoryDTOMapper.toDTO(bookEntry.getCategory()),
+//				walletDTOMapper.toDTO(bookEntry.getWallet()), bookEntry.getName(), bookEntry.getDescription(),
+//				bookEntry.getValue(), bookEntry.getDate(), bookEntry.getStatus());
 	}
 
 	@Override
-	public BookEntry toEntity(BookEntryDTO bookEntryDTO) {
-		return new BookEntry(bookEntryDTO.id(), categoryDTOMapper.toEntity(bookEntryDTO.categoryDto()),
-				walletDTOMapper.toEntity(bookEntryDTO.walletDto()), bookEntryDTO.name(), bookEntryDTO.description(),
-				bookEntryDTO.value(), bookEntryDTO.date(), bookEntryDTO.status());
+	public BookEntry toEntity(BookEntryDto bookEntryDTO) {
+		return null;
+
+		//		return new BookEntry(bookEntryDTO.id(), categoryDTOMapper.toEntity(bookEntryDTO.categoryDto()),
+//				walletDTOMapper.toEntity(bookEntryDTO.walletDto()), bookEntryDTO.name(), bookEntryDTO.description(),
+//				bookEntryDTO.value(), bookEntryDTO.date(), bookEntryDTO.status());
 	}
 }

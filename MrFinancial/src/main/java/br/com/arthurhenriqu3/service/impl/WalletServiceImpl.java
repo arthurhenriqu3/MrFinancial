@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.arthurhenriqu3.model.dto.WalletDTO;
+import br.com.arthurhenriqu3.model.dto.WalletDto;
 import br.com.arthurhenriqu3.model.dto.mapper.WalletDTOMapper;
 import br.com.arthurhenriqu3.repository.WalletRepository;
 import br.com.arthurhenriqu3.service.WalletService;
@@ -24,13 +24,13 @@ public class WalletServiceImpl implements WalletService {
 	private WalletDTOMapper walletDTOMapper;
 
 	@Override
-	public WalletDTO register(WalletDTO walletDTO) {
+	public WalletDto register(WalletDto walletDTO) {
 		return walletDTOMapper.toDTO(walletRepository.save(walletDTOMapper.toEntity(walletDTO)));
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public WalletDTO findById(String id) {
+	public WalletDto findById(String id) {
 		return walletDTOMapper.toDTO(walletRepository.findById(UUID.fromString(id)).orElseThrow(() -> new RuntimeException()));
 	}
 
@@ -42,14 +42,14 @@ public class WalletServiceImpl implements WalletService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<WalletDTO> findAll() {
+	public List<WalletDto> findAll() {
 		return walletRepository.findAll().stream().map(w -> walletDTOMapper.toDTO(w)).collect(Collectors.toList());
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<WalletDTO> findAll(Pageable pageable) {
-		return walletRepository.findAll(pageable).getContent().stream().map(w -> walletDTOMapper.toDTO(w))
+	public List<WalletDto> findAll(Pageable pageable) {
+		return walletRepository.findAll(pageable).getContent().stream().map(w -> new WalletDto(w))
 				.collect(Collectors.toList());
 	}
 }

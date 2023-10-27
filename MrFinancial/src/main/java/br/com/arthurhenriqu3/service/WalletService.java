@@ -4,17 +4,17 @@ import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 
-import br.com.arthurhenriqu3.model.dto.WalletDTO;
+import br.com.arthurhenriqu3.model.dto.WalletDto;
 
 public interface WalletService {
 
-	public WalletDTO register(WalletDTO walletDTO);
+	public WalletDto register(WalletDto walletDTO);
 
-	public WalletDTO findById(String id);
+	public WalletDto findById(String id);
 
 	public void deleteById(String id);
 
-	public List<WalletDTO> findAll();
+	public List<WalletDto> findAll();
 
-	public List<WalletDTO> findAll(Pageable pageable);
+	public List<WalletDto> findAll(Pageable pageable);
 }

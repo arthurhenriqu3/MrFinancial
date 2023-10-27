@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import br.com.arthurhenriqu3.model.dto.WalletDTO;
+import br.com.arthurhenriqu3.model.User;
+import br.com.arthurhenriqu3.model.Wallet;
+import br.com.arthurhenriqu3.model.dto.UserDto;
+import br.com.arthurhenriqu3.model.dto.WalletDto;
 import br.com.arthurhenriqu3.model.dto.mapper.UserDTOMapper;
 import br.com.arthurhenriqu3.model.enums.StatusEnum;
 import br.com.arthurhenriqu3.service.UserService;
@@ -40,7 +44,10 @@ public class WalletController {
 
 	@GetMapping("/new")
 	public String getFormPage(final Model model) {
-		model.addAttribute("walletDto", new WalletDTO(null, userDTOMapper.toDTO(userService.findAll().get(0)), null, StatusEnum.INATIVO, null));
+		Wallet wallet = new Wallet();
+		wallet.setUser(userService.findAll().get(0));
+		
+		model.addAttribute("walletDto", new WalletDto(wallet));
 		model.addAttribute("status", Arrays.asList(StatusEnum.values()));
 		
 		return "wallet/formWallet";
@@ -55,11 +62,14 @@ public class WalletController {
 	}
 	
 	@PostMapping("/register")
-	public String doRegisterData(@ModelAttribute WalletDTO walletDTO, BindingResult bindingResult, final Model model) {
-		System.out.println(walletDTO); 
+	public String doRegisterData(@ModelAttribute("walletDto") WalletDto walletDto, BindingResult bindingResult, final Model model) {
+		System.out.println("### walletDTO ###"); 
+		System.out.println(walletDto.getName()); 
+		System.out.println(walletDto.getStatus()); 
+		System.out.println(walletDto.getUserDTO()); 
 
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("walletDto", walletDTO);
+			model.addAttribute("walletDto", walletDto);
 			model.addAttribute("status", Arrays.asList(StatusEnum.values()));
 
 			return "wallet/formWallet";

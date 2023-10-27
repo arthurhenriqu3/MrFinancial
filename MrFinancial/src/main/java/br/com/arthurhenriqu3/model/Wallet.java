@@ -133,6 +133,6 @@ public class Wallet implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Wallet [id=" + id + ", name=" + name + "]";
+		return "Wallet [id=" + id + ", name=" + name + ", user=[" + user + "]]";
 	}
 }

@@ -7,36 +7,39 @@ import org.springframework.stereotype.Component;
 
 import br.com.arthurhenriqu3.model.User;
 import br.com.arthurhenriqu3.model.Wallet;
-import br.com.arthurhenriqu3.model.dto.UserDTO;
-import br.com.arthurhenriqu3.model.dto.WalletDTO;
+import br.com.arthurhenriqu3.model.dto.UserDto;
+import br.com.arthurhenriqu3.model.dto.WalletDto;
 
 @Component
-public class WalletDTOMapper implements DTOMapper<Wallet, WalletDTO> {
+public class WalletDTOMapper implements DTOMapper<Wallet, WalletDto> {
 
 	@Autowired
 	private UserDTOMapper userDTOMapper;
 
 	@Override
-	public WalletDTO toDTO(Wallet wallet) {
+	public WalletDto toDTO(Wallet wallet) {
 
-		UserDTO userDTO = null;
+		UserDto userDTO = null;
 
 		if (!Objects.isNull(wallet.getUser())) {
 			userDTO = userDTOMapper.toDTO(wallet.getUser());
 		}
 
-		return new WalletDTO(wallet.getId(), userDTO, wallet.getName(), wallet.getStatus(), null);
+		return null;
+		//return new WalletDTO(wallet.getId(), userDTO, wallet.getName(), wallet.getStatus(), null);
 	}
 
 	@Override
-	public Wallet toEntity(WalletDTO walletDto) {
+	public Wallet toEntity(WalletDto walletDto) {
 
 		User user = null;
+		
+		return null;
 
-		if (!Objects.isNull(walletDto.userDTO())) {
-			user = userDTOMapper.toEntity(walletDto.userDTO());
-		}
-
-		return new Wallet(walletDto.id(), user, walletDto.name(), walletDto.status(), null);
+//		if (!Objects.isNull(walletDto.userDTO())) {
+//			user = userDTOMapper.toEntity(walletDto.userDTO());
+//		}
+//
+//		return new Wallet(walletDto.id(), user, walletDto.name(), walletDto.status(), null);
 	}
 }
